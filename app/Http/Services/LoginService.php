@@ -2,11 +2,10 @@
 
 namespace App\Http\Services;
 
-//use Acme\Client;
 use Illuminate\Support\Facades\Storage;
+use Log;
 use Symfony\Component\HttpClient\HttpClient;
 use thiagoalessio\TesseractOCR\TesseractOCR;
-use Log;
 
 class LoginService
 {
@@ -17,7 +16,7 @@ class LoginService
         $authentication_code = $this->getLoginAuthenticationCode('AuthenticationCodeImage.gif');
         Log::info("image code = $authentication_code");
         $client = HttpClient::create(['headers' => [
-            'Cookie'=>"ASP.NET_SessionId=$cookie"
+            'Cookie' => "ASP.NET_SessionId=$cookie",
         ]]);
 
         $response = $client->request('POST', 'https://scr.cyc.org.tw/tp12.aspx?Module=login_page&files=login', [
@@ -28,7 +27,9 @@ class LoginService
             ],
         ]);
 
-        dd($response);
+        $is_login_success = $this->getLoginSuccess($response->getContent());
+
+        return $is_login_success;
     }
 
     public function getLoginResponseCookie()
@@ -64,7 +65,7 @@ class LoginService
         if ($matches) {
             $cookie = $matches[0][1];
         }
-    
+
         $contents = $response->getContent();
 
         Storage::put("AuthenticationCodeImage.gif", $contents);
@@ -91,5 +92,19 @@ class LoginService
         }
 
         return $result;
+    }
+
+    public function getLoginSuccess($response_content)
+    {
+        $is_login_success = true;
+        $re = '/(1,,|2,驗證碼錯誤,)/m';
+
+        preg_match_all($re, $response_content, $matches, PREG_SET_ORDER, 0);
+
+        if ($matches) {
+            $is_login_success = false;
+        }
+
+        return $is_login_success;
     }
 };
