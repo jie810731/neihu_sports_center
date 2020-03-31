@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
             Log::info('test schedule');
         })->everyMinute();
 
-        $schedule->job(new Login)->everyMinute();
+        $schedule->job(new Login)->dailyAt('23:55');
     }
 
     /**
