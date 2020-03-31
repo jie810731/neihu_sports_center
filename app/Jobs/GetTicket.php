@@ -63,7 +63,7 @@ class GetTicket implements ShouldQueue
             foreach ($times as $time) {
                 //echo ("post time = {$time} " . PHP_EOL);
 
-                $this->postTicket($session, $get_ticket_date, $time, $section);
+                $this->postTicket($cookie, $get_ticket_date, $time, $section);
 
                 //echo ("post time = {$time} end " . PHP_EOL);
             }
@@ -84,7 +84,7 @@ class GetTicket implements ShouldQueue
         //echo ('loop end' . PHP_EOL);
     }
 
-    public function postTicket($session, $get_ticket_date, $order_time, $section)
+    public function postTicket($cookie, $get_ticket_date, $order_time, $section)
     {
         if (!$get_ticket_date || !$order_time) {
             return;
@@ -92,7 +92,7 @@ class GetTicket implements ShouldQueue
 
         $jar = \GuzzleHttp\Cookie\CookieJar::fromArray(
             [
-                'ASP.NET_SessionId' => $session,
+                'ASP.NET_SessionId' => $cookie,
             ],
             'scr.cyc.org.tw'
         );
