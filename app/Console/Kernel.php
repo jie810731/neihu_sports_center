@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Log;
 use App\Jobs\Login;
+use App\Jobs\GetTicket;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,7 +31,8 @@ class Kernel extends ConsoleKernel
             Log::info('test schedule');
         })->everyMinute();
 
-        $schedule->job(new Login)->dailyAt('23:55');
+        // $schedule->job(new Login)->dailyAt('23:55');
+        $schedule->job(new GetTicket)->everyMinute();
     }
 
     /**

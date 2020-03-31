@@ -40,8 +40,6 @@ class Test extends Command
      */
     public function handle()
     {
-        Redis::set('name', 'Taylor');
-        Cache::put('abc', 'abc');
         Login::dispatch();
         
     }
