@@ -31,8 +31,8 @@ class Kernel extends ConsoleKernel
             Log::info('test schedule');
         })->everyMinute();
 
-        // $schedule->job(new Login)->dailyAt('23:55');
-        $schedule->job(new GetTicket)->everyMinute();
+        $schedule->job(new Login)->dailyAt('23:55');
+        $schedule->job(new GetTicket)->dailyAt('23:59');
     }
 
     /**

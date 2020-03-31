@@ -40,12 +40,12 @@ class GetTicket implements ShouldQueue
         }
 
         //24小時
-        $times = [6, 7];
+        $times = [20, 21];
 
         $sections = [88, 87];
 
         $get_ticket_date = date("Y/m/d", mktime(0, 0, 0, date("m"), date("d") + 8, date("Y")));
-        $get_ticket_date = '2020/04/07';
+        //$get_ticket_date = '2020/04/07';
         $can_start_get_ticket_time = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y")));
 
         $end_get_ticket_time = date("Y-m-d H:i:s", mktime(0, 0, 10, date("m"), date("d") + 1, date("Y")));
@@ -57,21 +57,21 @@ class GetTicket implements ShouldQueue
         //while ($is_can_get_ticket) {
         $now = date("Y-m-d H:i:s", strtotime('now'));
 
-        //if ($now >= $can_start_get_ticket_time) {
+        if ($now >= $can_start_get_ticket_time) {
 
-        foreach ($sections as $section) {
-            foreach ($times as $time) {
-                //echo ("post time = {$time} " . PHP_EOL);
+            foreach ($sections as $section) {
+                foreach ($times as $time) {
+                    //echo ("post time = {$time} " . PHP_EOL);
 
-                $this->postTicket($cookie, $get_ticket_date, $time, $section);
+                    $this->postTicket($cookie, $get_ticket_date, $time, $section);
 
-                //echo ("post time = {$time} end " . PHP_EOL);
+                    //echo ("post time = {$time} end " . PHP_EOL);
+                }
             }
-        }
 
-        //} else {
-        //echo ("time  not yet now = {$now}" . PHP_EOL);
-        //}
+        } else {
+            //echo ("time  not yet now = {$now}" . PHP_EOL);
+        }
 
         if ($now > $end_get_ticket_time) {
             // echo ('over time' . PHP_EOL);
