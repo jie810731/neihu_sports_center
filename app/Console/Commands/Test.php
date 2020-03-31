@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Jobs\Login;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
+use App\Jobs\GetTicket;
 
 class Test extends Command
 {
@@ -41,6 +42,7 @@ class Test extends Command
     public function handle()
     {
         Login::dispatch();
+        GetTicket::dispatch();
         
     }
 }
