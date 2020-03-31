@@ -9,6 +9,8 @@ use thiagoalessio\TesseractOCR\TesseractOCR;
 
 class LoginService
 {
+    public $cookie = '';
+
     public function login()
     {
         $cookie = $this->getLoginAuthenticationCodeImageCookie();
@@ -28,6 +30,7 @@ class LoginService
         ]);
 
         $is_login_success = $this->getLoginSuccess($response->getContent());
+        $this->cookie = $cookie;
 
         return $is_login_success;
     }
