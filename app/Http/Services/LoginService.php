@@ -68,7 +68,9 @@ class LoginService
 
         $contents = $response->getContent();
 
-        Storage::put("AuthenticationCodeImage.png", $contents);
+        Storage::put("AuthenticationCodeImage.gif", $contents);
+
+        imagepng(imagecreatefromstring(file_get_contents(storage_path('app').'/AuthenticationCodeImage.gif')), storage_path('app')."/AuthenticationCodeImage.png");
 
         return $cookie;
     }
