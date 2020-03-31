@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 use Log;
 
 class Login
@@ -41,7 +41,9 @@ class Login
 
         } while (!$login_success);
 
-        Session::put('cookie', $login_service->cookie);
+        Cache::put('cookie', $login_service->cookie);
+
+        Log::info('redis cookie = '.Cache::get('cookie'));
 
     }
 }
