@@ -41,7 +41,7 @@ class Login
 
         } while (!$login_success);
 
-        Session::put('cookie', $login_service->$cookie);
+        Session::put('cookie', $login_service->cookie);
 
     }
 }
