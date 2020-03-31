@@ -4,14 +4,13 @@ namespace App\Jobs;
 
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Log;
 
-class GetTicket implements ShouldQueue
+class GetTicket
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -33,6 +32,7 @@ class GetTicket implements ShouldQueue
     public function handle()
     {
         Log::info('get ticket job start');
+        
         $cookie = Cache::get('cookie');
 
         if (!$cookie) {
