@@ -13,7 +13,7 @@ class LoginService
     {
         $cookie = $this->getLoginAuthenticationCodeImageCookie();
         Log::info("cookie = $cookie");
-        $authentication_code = $this->getLoginAuthenticationCode('AuthenticationCodeImage.gif');
+        $authentication_code = $this->getLoginAuthenticationCode('AuthenticationCodeImage.png');
         Log::info("image code = $authentication_code");
         $client = HttpClient::create(['headers' => [
             'Cookie' => "ASP.NET_SessionId=$cookie",
@@ -68,7 +68,7 @@ class LoginService
 
         $contents = $response->getContent();
 
-        Storage::put("AuthenticationCodeImage.gif", $contents);
+        Storage::put("AuthenticationCodeImage.png", $contents);
 
         return $cookie;
     }
