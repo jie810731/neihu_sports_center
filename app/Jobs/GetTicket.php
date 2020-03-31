@@ -31,6 +31,7 @@ class GetTicket implements ShouldQueue
      */
     public function handle()
     {
+        Log::info('get ticket job start');
         $cookie = Cache::get('cookie');
 
         if (!$cookie) {
@@ -53,65 +54,64 @@ class GetTicket implements ShouldQueue
         //echo ('going to start loop' . PHP_EOL);
 
         //while ($is_can_get_ticket) {
-            $now = date("Y-m-d H:i:s", strtotime('now'));
+        $now = date("Y-m-d H:i:s", strtotime('now'));
 
-            //if ($now >= $can_start_get_ticket_time) {
-            
+        //if ($now >= $can_start_get_ticket_time) {
 
-                foreach ($sections as $section) {
-                    foreach ($times as $time) {
-                        //echo ("post time = {$time} " . PHP_EOL);
+        foreach ($sections as $section) {
+            foreach ($times as $time) {
+                //echo ("post time = {$time} " . PHP_EOL);
 
-                        postTicket($session, $get_ticket_date, $time, $section);
+                $this->postTicket($session, $get_ticket_date, $time, $section);
 
-                        //echo ("post time = {$time} end " . PHP_EOL);
-                    }
-                }
-
-            //} else {
-                //echo ("time  not yet now = {$now}" . PHP_EOL);
-            //}
-
-            if ($now > $end_get_ticket_time) {
-               // echo ('over time' . PHP_EOL);
-                $is_can_get_ticket = false;
-            } else {
-                //echo ("continue loop" . PHP_EOL);
+                //echo ("post time = {$time} end " . PHP_EOL);
             }
+        }
+
+        //} else {
+        //echo ("time  not yet now = {$now}" . PHP_EOL);
+        //}
+
+        if ($now > $end_get_ticket_time) {
+            // echo ('over time' . PHP_EOL);
+            $is_can_get_ticket = false;
+        } else {
+            //echo ("continue loop" . PHP_EOL);
+        }
 
         //}
         //echo ('loop end' . PHP_EOL);
+    }
 
-        function postTicket($session, $get_ticket_date, $order_time, $section)
-        {
-            if (!$get_ticket_date || !$order_time) {
-                return;
-            }
-
-            $jar = \GuzzleHttp\Cookie\CookieJar::fromArray(
-                [
-                    'ASP.NET_SessionId' => $session,
-                ],
-                'scr.cyc.org.tw'
-            );
-
-            $query = [
-                'module' => 'net_booking',
-                'files' => 'booking_place',
-                'StepFlag' => 25,
-                'QPid' => $section,
-                'QTime' => $order_time,
-                'D' => $get_ticket_date,
-            ];
-
-            $client = new Client();
-
-            $client->request('GET', 'https://scr.cyc.org.tw/tp12.aspx', [
-                'query' => $query,
-                'cookies' => $jar,
-            ]);
-
+    public function postTicket($session, $get_ticket_date, $order_time, $section)
+    {
+        if (!$get_ticket_date || !$order_time) {
+            return;
         }
 
+        $jar = \GuzzleHttp\Cookie\CookieJar::fromArray(
+            [
+                'ASP.NET_SessionId' => $session,
+            ],
+            'scr.cyc.org.tw'
+        );
+
+        $query = [
+            'module' => 'net_booking',
+            'files' => 'booking_place',
+            'StepFlag' => 25,
+            'QPid' => $section,
+            'QTime' => $order_time,
+            'D' => $get_ticket_date,
+        ];
+
+        $client = new Client();
+
+        $client->request('GET', 'https://scr.cyc.org.tw/tp12.aspx', [
+            'query' => $query,
+            'cookies' => $jar,
+        ]);
+
     }
+
 }
