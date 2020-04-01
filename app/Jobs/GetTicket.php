@@ -32,10 +32,11 @@ class GetTicket
     public function handle()
     {
         Log::info('get ticket job start');
-        
+
         $cookie = Cache::get('cookie');
 
         if (!$cookie) {
+            Log::info('empty cookie');
             return;
         }
 
@@ -52,36 +53,27 @@ class GetTicket
 
         $is_can_get_ticket = true;
 
-        //echo ('going to start loop' . PHP_EOL);
+        while ($is_can_get_ticket) {
+            $now = date("Y-m-d H:i:s", strtotime('now'));
 
-        //while ($is_can_get_ticket) {
-        $now = date("Y-m-d H:i:s", strtotime('now'));
+            if ($now >= $can_start_get_ticket_time) {
 
-        if ($now >= $can_start_get_ticket_time) {
+                foreach ($sections as $section) {
+                    foreach ($times as $time) {
+                        Log::info("post time = {$time} ");
 
-            foreach ($sections as $section) {
-                foreach ($times as $time) {
-                    //echo ("post time = {$time} " . PHP_EOL);
+                        $this->postTicket($cookie, $get_ticket_date, $time, $section);
 
-                    $this->postTicket($cookie, $get_ticket_date, $time, $section);
-
-                    //echo ("post time = {$time} end " . PHP_EOL);
+                        Log::info("post time = {$time} end ");
+                    }
                 }
+
             }
 
-        } else {
-            //echo ("time  not yet now = {$now}" . PHP_EOL);
+            if ($now > $end_get_ticket_time) {
+                $is_can_get_ticket = false;
+            } 
         }
-
-        if ($now > $end_get_ticket_time) {
-            // echo ('over time' . PHP_EOL);
-            $is_can_get_ticket = false;
-        } else {
-            //echo ("continue loop" . PHP_EOL);
-        }
-
-        //}
-        //echo ('loop end' . PHP_EOL);
     }
 
     public function postTicket($cookie, $get_ticket_date, $order_time, $section)
