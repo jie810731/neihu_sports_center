@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Log;
 use App\Jobs\Login;
 use App\Jobs\GetTicket;
+use App\Jobs\GetOrderLists;
 
 class Kernel extends ConsoleKernel
 {
@@ -33,6 +34,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->job(new Login)->dailyAt('23:55');
         $schedule->job(new GetTicket)->dailyAt('23:59');
+        $schedule->job(new GetOrderLists)->dailyAt('00:02');
     }
 
     /**
