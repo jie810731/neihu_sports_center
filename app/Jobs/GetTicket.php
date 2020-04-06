@@ -43,7 +43,7 @@ class GetTicket
         //24小時
         $times = [20, 21];
 
-        $sections = [88, 87];
+        $sections = [87,88];
 
         $get_ticket_date = date("Y/m/d", mktime(0, 0, 0, date("m"), date("d") + 8, date("Y")));
         //$get_ticket_date = '2020/04/07';

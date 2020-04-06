@@ -7,6 +7,7 @@ use App\Jobs\Login;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 use App\Jobs\GetTicket;
+use App\Jobs\GetOrderLists;
 
 class Test extends Command
 {
@@ -43,6 +44,7 @@ class Test extends Command
     {
         Login::dispatch();
         //GetTicket::dispatch();
+        GetOrderLists::dispatch();
         
     }
 }
