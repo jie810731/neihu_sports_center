@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             Log::info('test schedule');
-        })->everyMinute();
+        })->dailyAt('01:00');
 
         $schedule->job(new Login)->dailyAt('23:55');
         $schedule->job(new GetTicket)->dailyAt('23:59');
