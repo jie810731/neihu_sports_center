@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Log;
+use Exception;
 
 class Login
 {
@@ -37,7 +38,14 @@ class Login
 
         $login_success = false;
         do {
-            $login_success = $login_service->login();
+
+            try{
+                $login_success = $login_service->login();
+            }catch(Exception $ex){
+                Log::error($ex->getMessage());
+                $login_success = true;
+            }
+            
 
         } while (!$login_success);
 

@@ -42,7 +42,7 @@ class Test extends Command
     public function handle()
     {
         Login::dispatch();
-        GetTicket::dispatch();
+        //GetTicket::dispatch();
         
     }
 }

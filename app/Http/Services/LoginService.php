@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Log;
 use Symfony\Component\HttpClient\HttpClient;
 use thiagoalessio\TesseractOCR\TesseractOCR;
+use Exception;
 
 class LoginService
 {
@@ -13,6 +14,10 @@ class LoginService
 
     public function login()
     {
+        if(!env('LOGIN_ID') || !env('LOGIN_PASSWORD')){
+            throw new Exception('did not set env');
+        }
+
         $cookie = $this->getLoginAuthenticationCodeImageCookie();
         Log::info("cookie = $cookie");
         $authentication_code = $this->getLoginAuthenticationCode('AuthenticationCodeImage.png');
@@ -23,8 +28,8 @@ class LoginService
 
         $response = $client->request('POST', 'https://scr.cyc.org.tw/tp12.aspx?Module=login_page&files=login', [
             'body' => [
-                'loginid' => 'F125495672',
-                'loginpw' => 'leebig0211',
+                'loginid' => env('LOGIN_ID'),
+                'loginpw' => env('LOGIN_PASSWORD'),
                 'Captcha_text' => $authentication_code,
             ],
         ]);
