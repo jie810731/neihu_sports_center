@@ -4,7 +4,6 @@ namespace App\Http\Services;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\DomCrawler\Crawler;
 
 class OderListService
@@ -70,7 +69,11 @@ class OderListService
             ];
 
             if (count($font) > 0) {
-                $td_object['order_status'] = $font->item(0)->nodeValue;
+                $dom = $font->item(0);
+                if ($dom) {
+                    $td_object['order_status'] = $dom->nodeValue;
+                }
+
             }
 
             $lists[] = $td_object;
