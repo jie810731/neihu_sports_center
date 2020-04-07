@@ -59,15 +59,19 @@ class OderListService
             }
             $span_elements = $tr->getElementsByTagName('span');
 
-            $font = $span_elements->item(10)->getElementsByTagName('font');
+            $font = $span_elements->item(11)->getElementsByTagName('font');
 
             $td_object = [
                 'order_date' => $span_elements->item(0)->nodeValue,
                 'order_item' => $span_elements->item(3)->nodeValue,
                 'order_play_date' => $span_elements->item(6)->nodeValue,
                 'order_time' => $span_elements->item(8)->nodeValue,
-                'order_status' => $font->item(0)->nodeValue,
+                'order_status' => $span_elements->item(11)->nodeValue,
             ];
+
+            if (count($font) > 0) {
+                $td_object['order_status'] = $font->item(0)->nodeValue;
+            }
 
             $lists[] = $td_object;
 
