@@ -64,7 +64,7 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="flex-center position-ref full-height" id="app">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -96,5 +96,37 @@
                 </div>
             </div>
         </div>
+
+        <script src="{{ mix("js/app.js")}}"></script>
+
+        <script>
+        
+            new Vue({
+                el: '#app',
+                mounted: function () {
+                    console.log('vue mounted');
+                    for (i = 0; i < 10; i++) { 
+                        this.getTicket(i);
+                    }
+                    
+                },
+                data: {
+                    api_get_ticket: {!! json_encode(route('api-get-ticket')) !!} 
+                },
+                methods: {
+                    getTicket: async function (i) {
+                        console.log('test');
+                        axios.get(this.api_get_ticket,{
+                            params: {
+                                aa: i
+                            }
+                        })
+                        .then(function(response) {
+                            console.log(response);
+                        })
+                    }
+                }
+            })
+        </script>    
     </body>
 </html>
