@@ -57,11 +57,15 @@ class GetTicketMultiProcess
                         //Parent process
                     } else {
                         try {
-                            while (date("Y-m-d H:i:s", strtotime('now')) > $can_start_get_ticket_time) {
-                                Log::info("multi process start section = {$section} time = {$time}");
-                                //Log::info('cookie = '.$cookie);
-                                $this->court_service->postCourt($this->cookie, $get_ticket_day, $time, $section);
-                                Log::info("multi process end section = {$section} time = {$time}");
+                            $is_can_get_ticket = true;
+                            while ($is_can_get_ticket) {
+                                if (date("Y-m-d H:i:s", strtotime('now')) > $can_start_get_ticket_time) {
+                                    Log::info("multi process start section = {$section} time = {$time}");
+                                    $this->court_service->postCourt($this->cookie, $get_ticket_day, $time, $section);
+                                    Log::info("multi process end section = {$section} time = {$time}");
+
+                                    $is_can_get_ticket = false;
+                                }
                             }
                         } catch (Exception $ex) {
                             Log::error($ex->getMessage());
