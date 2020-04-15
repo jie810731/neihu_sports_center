@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
+    for($index = 0 ;$index< 10 ;$index++){
+        fopen(route('api-get-ticket',[
+            'index'=>$index
+            ]
+        ), "r");
+    }
+   
     return view('welcome');
 });

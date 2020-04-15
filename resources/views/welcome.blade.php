@@ -99,7 +99,7 @@
 
         <script src="{{ mix("js/app.js")}}"></script>
 
-        <script>
+        {{-- <script>
         
             new Vue({
                 el: '#app',
@@ -127,6 +127,6 @@
                     }
                 }
             })
-        </script>    
+        </script>     --}}
     </body>
 </html>

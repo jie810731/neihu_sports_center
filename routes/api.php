@@ -18,25 +18,29 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('get-ticket', function (Request $request) {
-    \Log::info('get-ticket start');
-
-    $order_date = $request->get('order_date');
-    $order_time = $request->get('order_time');
-    $section = $request->get('section');
-
-    $login_service = new \App\Http\Services\LoginService;
-    $court_service = new \App\Http\Services\CourtService;
-
-    $is_validated = !empty($order_date) || !empty($order_time) || !empty($section);
-
-    if (!$is_validated) {
-        \Log::info('Miss parameter');
-        return 'Miss parameter';
+    $index = $request->get('index');
+    if($index % 2 == 0){
+        sleep(3);
     }
+    \Log::info('get-ticket start'.$index);
 
-    $cookie = \Illuminate\Support\Facades\Cache::get('cookie');
+    // $order_date = $request->get('order_date');
+    // $order_time = $request->get('order_time');
+    // $section = $request->get('section');
 
-    $login_service->login();
-    $court_service->postCourt($cookie, $order_date, $order_time, $section);
+    // $login_service = new \App\Http\Services\LoginService;
+    // $court_service = new \App\Http\Services\CourtService;
+
+    // $is_validated = !empty($order_date) || !empty($order_time) || !empty($section);
+
+    // if (!$is_validated) {
+    //     \Log::info('Miss parameter');
+    //     return 'Miss parameter';
+    // }
+
+    // $cookie = \Illuminate\Support\Facades\Cache::get('cookie');
+
+    // $login_service->login();
+    // $court_service->postCourt($cookie, $order_date, $order_time, $section);
 
 })->name('api-get-ticket');
