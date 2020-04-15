@@ -9,7 +9,8 @@ class CourtService
 {
     public function postCourt($cookie, $order_date, $order_time, $section)
     {
-        if ($cookie) {
+        if (!$cookie) {
+            Log::info('empty cookie');
             return;
         }
         if (!$order_date || !$order_time) {
@@ -34,7 +35,7 @@ class CourtService
 
         $client = new Client();
 
-        $client->request('GET', 'https://scr.cyc.org.tw/tp12.aspx', [
+        $response = $client->request('GET', 'https://scr.cyc.org.tw/tp12.aspx', [
             'query' => $query,
             'cookies' => $jar,
         ]);

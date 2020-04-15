@@ -3,11 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Log;
+use App\Jobs\GetTicketMultiProcess;
 use App\Jobs\Login;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
-use App\Jobs\GetTicket;
-use App\Jobs\GetOrderLists;
 
 class Test extends Command
 {
@@ -43,8 +41,10 @@ class Test extends Command
     public function handle()
     {
         Login::dispatch();
+        GetTicketMultiProcess::dispatch();
+       
         //GetTicket::dispatch();
-        GetOrderLists::dispatch();
-        
+        //GetOrderLists::dispatch();
+
     }
 }
