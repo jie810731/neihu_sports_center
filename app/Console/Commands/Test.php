@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Log;
 use App\Jobs\GetTicketMultiProcess;
 use App\Jobs\Login;
+use Illuminate\Console\Command;
 
 class Test extends Command
 {
@@ -42,7 +43,7 @@ class Test extends Command
     {
         Login::dispatch();
         GetTicketMultiProcess::dispatch();
-       
+
         //GetTicket::dispatch();
         //GetOrderLists::dispatch();
 

@@ -36,6 +36,7 @@ class GetTicketMultiProcess
      */
     public function handle()
     {
+        Log::info("start MultiProcess");
         $mutable = Carbon::now();
         $get_ticket_day = $mutable->add(8, 'day');
         $get_ticket_day = $get_ticket_day->isoFormat('YYYY/MM/DD');

@@ -43,7 +43,7 @@ class GetTicket
         //24小時
         $times = [20, 21];
 
-        $sections = [87,88];
+        $sections = [87, 88];
 
         $get_ticket_date = date("Y/m/d", mktime(0, 0, 0, date("m"), date("d") + 8, date("Y")));
         //$get_ticket_date = '2020/04/07';
@@ -61,8 +61,11 @@ class GetTicket
                 foreach ($sections as $section) {
                     foreach ($times as $time) {
                         Log::info("post time = {$time} ");
-
-                        $this->postTicket($cookie, $get_ticket_date, $time, $section);
+                        try {
+                            $this->postTicket($cookie, $get_ticket_date, $time, $section);
+                        } catch (Exception $ex) {
+                            Log::info($ex->getMessage());
+                        }
 
                         Log::info("post time = {$time} end ");
                     }
@@ -72,7 +75,7 @@ class GetTicket
 
             if ($now > $end_get_ticket_time) {
                 $is_can_get_ticket = false;
-            } 
+            }
         }
     }
 
