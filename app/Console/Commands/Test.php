@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Log;
 use App\Jobs\GetTicketMultiProcess;
 use App\Jobs\Login;
-use Illuminate\Console\Command;
 
 class Test extends Command
 {
