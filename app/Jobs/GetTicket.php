@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -9,7 +10,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Log;
-use Exception;
 
 class GetTicket
 {
@@ -44,7 +44,7 @@ class GetTicket
         //24小時
         $times = [20, 21];
 
-        $sections = [87, 88];
+        $sections = [87];
 
         $get_ticket_date = date("Y/m/d", mktime(0, 0, 0, date("m"), date("d") + 8, date("Y")));
         //$get_ticket_date = '2020/04/07';

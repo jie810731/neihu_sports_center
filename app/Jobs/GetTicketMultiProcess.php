@@ -45,7 +45,7 @@ class GetTicketMultiProcess
 
         $times = [20, 21];
 
-        $sections = [88, 87];
+        $sections = [87];
 
         foreach ($sections as $section) {
             foreach ($times as $time) {
