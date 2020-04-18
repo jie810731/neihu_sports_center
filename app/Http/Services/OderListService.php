@@ -52,15 +52,15 @@ class OderListService
 
         $tr_elements = $crawler->filterXPath('//*[@id="subform_List"]/table/tr[2]/td/table/tr[2]/td/table')->children();
 
-        if (count($tr_elements) < 3) {
-            return $lists;
-        }
-
         foreach ($tr_elements as $index => $tr) {
             if ($index == 0) {
                 continue;
             }
             $span_elements = $tr->getElementsByTagName('span');
+            
+            if (count($span_elements) < 1) {
+                continue;
+            }
 
             $font = $span_elements->item(11)->getElementsByTagName('font');
 
