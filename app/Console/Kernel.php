@@ -33,11 +33,11 @@ class Kernel extends ConsoleKernel
             Log::info('test schedule');
         })->dailyAt('01:00');
 
-        $schedule->job(new GetTicketMultiProcess)->everyMinute();
-        
+        //$schedule->job(new GetTicketMultiProcess)->everyMinute();
+
         $schedule->job(new Login)->dailyAt('23:55');
         $schedule->job(new GetTicket)->dailyAt('23:59');
-        $schedule->job(new GetTicketMultiProcess)->dailyAt('23:59');
+        $schedule->job(new GetTicketMultiProcess)->dailyAt('23:58');
         $schedule->job(new GetOrderLists)->dailyAt('00:01');
     }
 
