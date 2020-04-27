@@ -49,7 +49,7 @@ class GetTicketMultiProcess
 
         foreach ($sections as $section) {
             foreach ($times as $time) {
-                for ($index = 0; $index < 1; $index++) {
+                for ($index = 0; $index < 3; $index++) {
                     $pid = pcntl_fork();
 
                     if ($pid == -1) {
@@ -61,7 +61,7 @@ class GetTicketMultiProcess
                         try {
                             $is_can_get_ticket = true;
                             while ($is_can_get_ticket) {
-                                if (date("Y-m-d H:i:s", strtotime('now')) > $can_start_get_ticket_time) {
+                                if (date("Y-m-d H:i:s", strtotime('now')) >= $can_start_get_ticket_time) {
                                     Log::info("multi process start section = {$section} time = {$time}");
                                     $this->court_service->postCourt($this->cookie, $get_ticket_day, $time, $section);
                                     Log::info("multi process end section = {$section} time = {$time}");
