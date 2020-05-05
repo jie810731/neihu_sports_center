@@ -4,11 +4,12 @@ namespace App\Jobs;
 
 use App\Http\Services\OderListService;
 use App\Http\Services\SendMessageService;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Exception;
+use Log;
 
 class GetOrderLists
 {
@@ -35,16 +36,14 @@ class GetOrderLists
         $send_message_service = new SendMessageService;
         $send_message = '';
 
-        try{
+        try {
             $lists = $order_list_service->getOrderLists();
-        }catch(Exception $ex){
+        } catch (Exception $ex) {
             Log::info($ex->getMessage());
             $lists = [];
             $send_message = '好像壞了 自己去看有沒有搶到';
         }
-        
 
-        
         foreach ($lists as $list) {
             $send_message .= "日期:{$list['order_play_date']}" . PHP_EOL;
             $send_message .= "時間:{$list['order_time']}" . PHP_EOL;
