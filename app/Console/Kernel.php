@@ -2,13 +2,13 @@
 
 namespace App\Console;
 
+use App\Jobs\GetOrderLists;
+use App\Jobs\GetTicket;
+use App\Jobs\GetTicketMultiProcess;
+use App\Jobs\Login;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Log;
-use App\Jobs\Login;
-use App\Jobs\GetTicket;
-use App\Jobs\GetOrderLists;
-use App\Jobs\GetTicketMultiProcess;
 
 class Kernel extends ConsoleKernel
 {
@@ -37,7 +37,13 @@ class Kernel extends ConsoleKernel
 
         $schedule->job(new Login)->dailyAt('23:55');
         $schedule->job(new GetTicket)->dailyAt('23:59');
-        $schedule->job(new GetTicketMultiProcess)->dailyAt('23:58');
+        //$schedule->job(new GetTicketMultiProcess)->dailyAt('23:58');
+        $schedule->job(new GetTicketMultiProcess(20))
+            ->everyMinute()
+            ->onOneServer();
+        $schedule->job(new GetTicketMultiProcess(21))
+            ->everyMinute()
+            ->onOneServer();
         $schedule->job(new GetOrderLists)->dailyAt('00:01');
     }
 
@@ -48,7 +54,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

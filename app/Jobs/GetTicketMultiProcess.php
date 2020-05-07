@@ -18,15 +18,17 @@ class GetTicketMultiProcess
 
     protected $court_service;
     protected $cookie;
+    protected $time;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($time)
     {
         $this->court_service = new CourtService;
         $this->cookie = Cache::get('cookie');
+        $this->$time = $time;
     }
 
     /**
@@ -43,12 +45,12 @@ class GetTicketMultiProcess
 
         $can_start_get_ticket_time = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y")));
 
-        $times = [20, 21];
+        //$times = [20, 21];
 
         $sections = [87];
 
         foreach ($sections as $section) {
-            foreach ($times as $time) {
+            //foreach ($times as $time) {
                 for ($index = 0; $index < 3; $index++) {
                     $pid = pcntl_fork();
 
@@ -60,22 +62,22 @@ class GetTicketMultiProcess
                         Log::info("sub_process pid = {$pid}");
                         try {
                             $is_can_get_ticket = true;
-                            while ($is_can_get_ticket) {
-                                if (date("Y-m-d H:i:s", strtotime('now')) >= $can_start_get_ticket_time) {
-                                    Log::info("multi process start section = {$section} time = {$time}");
-                                    $this->court_service->postCourt($this->cookie, $get_ticket_day, $time, $section);
-                                    Log::info("multi process end section = {$section} time = {$time}");
+                            //while ($is_can_get_ticket) {
+                                //if (date("Y-m-d H:i:s", strtotime('now')) >= $can_start_get_ticket_time) {
+                                    Log::info("multi process start section = {$section} time = {$this->time}");
+                                    $this->court_service->postCourt($this->cookie, $get_ticket_day, $this->time, $section);
+                                    Log::info("multi process end section = {$section} time = {$this->time}");
 
                                     $is_can_get_ticket = false;
-                                }
-                            }
+                                //}
+                            //}
                         } catch (Exception $ex) {
                             Log::error($ex->getMessage());
                         }
                         break;
                     }
                 }
-            }
+            //}
         }
     }
 }
