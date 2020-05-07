@@ -40,10 +40,10 @@ class Kernel extends ConsoleKernel
         //$schedule->job(new GetTicketMultiProcess)->dailyAt('23:58');
         $schedule->job(new GetTicketMultiProcess(20))
             ->everyMinute()
-            ->onOneServer();
+            ->runInBackground();
         $schedule->job(new GetTicketMultiProcess(21))
             ->everyMinute()
-            ->onOneServer();
+            ->runInBackground();
         $schedule->job(new GetOrderLists)->dailyAt('00:01');
     }
 
