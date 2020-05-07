@@ -28,7 +28,7 @@ class GetTicketMultiProcess
     {
         $this->court_service = new CourtService;
         $this->cookie = Cache::get('cookie');
-        $this->$time = $time;
+        $this->time = $time;
     }
 
     /**
