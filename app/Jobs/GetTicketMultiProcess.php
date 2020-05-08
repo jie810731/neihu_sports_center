@@ -38,7 +38,7 @@ class GetTicketMultiProcess
      */
     public function handle()
     {
-        Log::info("start MultiProcess");
+        Log::info("start MultiProcess time = $this->time");
         $mutable = Carbon::now();
         $mid = '12:00:00';
 
@@ -53,7 +53,7 @@ class GetTicketMultiProcess
         $can_start_get_ticket_time = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y")));
 
         $section = 87;
-        
+
         $this->court_service->postCourt($this->cookie, $get_ticket_day, $this->time, $section);
         
     }
