@@ -3,7 +3,6 @@
 namespace App\Console;
 
 use App\Jobs\GetOrderLists;
-use App\Jobs\GetTicket;
 use App\Jobs\GetTicketMultiProcess;
 use App\Jobs\Login;
 use Illuminate\Console\Scheduling\Schedule;
@@ -35,9 +34,23 @@ class Kernel extends ConsoleKernel
 
         //$schedule->job(new GetTicketMultiProcess)->everyMinute();
 
-        $schedule->job(new Login)->dailyAt('23:55');
-        $schedule->job(new GetTicket)->dailyAt('23:59');
+        $schedule->job(new Login)
+            ->dailyAt('23:55')
+            ->runInBackground();
+        //$schedule->job(new GetTicket)->dailyAt('23:59');
         //$schedule->job(new GetTicketMultiProcess)->dailyAt('23:58');
+        $schedule->job(new GetTicketMultiProcess(20))
+            ->everyMinute()
+            ->runInBackground();
+        $schedule->job(new GetTicketMultiProcess(21))
+            ->everyMinute()
+            ->runInBackground();
+        $schedule->job(new GetTicketMultiProcess(20))
+            ->everyMinute()
+            ->runInBackground();
+        $schedule->job(new GetTicketMultiProcess(21))
+            ->everyMinute()
+            ->runInBackground();
         $schedule->job(new GetTicketMultiProcess(20))
             ->everyMinute()
             ->runInBackground();

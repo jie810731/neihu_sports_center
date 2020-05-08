@@ -42,10 +42,10 @@ class Test extends Command
     public function handle()
     {
         Login::dispatch();
-        //GetTicketMultiProcess::dispatch();
+        GetTicketMultiProcess::dispatch(20);
 
         //GetTicket::dispatch();
-        GetOrderLists::dispatch();
+        //GetOrderLists::dispatch();
 
     }
 }
