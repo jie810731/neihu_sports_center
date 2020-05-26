@@ -39,25 +39,25 @@ class Kernel extends ConsoleKernel
             ->runInBackground();
         //$schedule->job(new GetTicket)->dailyAt('23:59');
         //$schedule->job(new GetTicketMultiProcess)->dailyAt('23:58');
-        $schedule->job(new GetTicketMultiProcess(20))
-            ->everyMinute()
-            ->runInBackground();
-        $schedule->job(new GetTicketMultiProcess(21))
-            ->everyMinute()
-            ->runInBackground();
-        $schedule->job(new GetTicketMultiProcess(20))
-            ->everyMinute()
-            ->runInBackground();
-        $schedule->job(new GetTicketMultiProcess(21))
-            ->everyMinute()
-            ->runInBackground();
-        $schedule->job(new GetTicketMultiProcess(20))
-            ->everyMinute()
-            ->runInBackground();
-        $schedule->job(new GetTicketMultiProcess(21))
-            ->everyMinute()
-            ->runInBackground();
-        $schedule->job(new GetOrderLists)->dailyAt('00:01');
+        // $schedule->job(new GetTicketMultiProcess(20))
+        //     ->everyMinute()
+        //     ->runInBackground();
+        // $schedule->job(new GetTicketMultiProcess(21))
+        //     ->everyMinute()
+        //     ->runInBackground();
+        // $schedule->job(new GetTicketMultiProcess(20))
+        //     ->everyMinute()
+        //     ->runInBackground();
+        // $schedule->job(new GetTicketMultiProcess(21))
+        //     ->everyMinute()
+        //     ->runInBackground();
+        // $schedule->job(new GetTicketMultiProcess(20))
+        //     ->everyMinute()
+        //     ->runInBackground();
+        // $schedule->job(new GetTicketMultiProcess(21))
+        //     ->everyMinute()
+        //     ->runInBackground();
+        // $schedule->job(new GetOrderLists)->dailyAt('00:01');
     }
 
     /**
