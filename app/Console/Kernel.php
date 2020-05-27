@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
         //$schedule->job(new GetTicketMultiProcess)->everyMinute();
 
         $schedule->job(new Login)
-            ->dailyAt('23:55')
+            ->everyFiveMinutes()
             ->runInBackground();
         //$schedule->job(new GetTicket)->dailyAt('23:59');
         //$schedule->job(new GetTicketMultiProcess)->dailyAt('23:58');
